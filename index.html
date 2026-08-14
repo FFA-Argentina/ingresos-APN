@@ -164,9 +164,9 @@
     .chartcard{padding:12px 8px 8px;overflow:hidden}
     .chart-head{flex-direction:column;gap:2px;margin:0 2px 4px}
     .chart-title{font-size:16px}
-    /* el SVG se agranda para que las etiquetas sean legibles y permite scroll-x si hace falta */
-    .chart-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-    svg{min-width:560px}
+    /* el SVG se comprime al ancho de pantalla: se ve siempre el período completo, sin scroll ni recortes */
+    .chart-scroll{overflow-x:visible}
+    svg{min-width:0;width:100%}
     /* leyenda: items más altos para el dedo */
     .leg li{padding:12px 12px;font-size:14px}
     .leg .val{font-size:13px}
@@ -445,9 +445,10 @@ function draw(){
     t.setAttribute('text-anchor','middle');t.textContent='Ciclo '+lbl;svg.appendChild(t);
   });
 
-  // x labels (every 3 months)
+  // x labels (cada 3 meses en desktop; cada 6 en pantallas angostas para que no se amontonen)
+  const xLabelStep = window.innerWidth<560 ? 6 : 3;
   MONTHS.forEach((mo,i)=>{
-    if(i%3!==0) return;
+    if(i%xLabelStep!==0) return;
     const t=document.createElementNS(SVG,'text');
     t.setAttribute('class','axis-txt');
     t.setAttribute('x',x(i));t.setAttribute('y',M.t+PH+16);
@@ -641,6 +642,13 @@ document.querySelectorAll('#seg-acc button').forEach(b=>{
 });
 // limpiar selección
 document.getElementById('clearSel').addEventListener('click',()=>{ state.sel.clear(); refresh(); });
+
+// redibuja al rotar pantalla o cambiar tamaño de ventana (recalcula densidad de etiquetas)
+let _resizeT=null;
+window.addEventListener('resize',()=>{
+  clearTimeout(_resizeT);
+  _resizeT=setTimeout(draw,150);
+});
 
 const svg=document.getElementById('chart');
 // Pointer events unifican mouse y touch (iOS/Android). Fallback a touch si no hay Pointer Events.
