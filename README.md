@@ -2,14 +2,15 @@
 
 Tablero interactivo de cobranzas de la **Dirección Nacional de Uso Público — Dirección de Concesiones**, con el informe trienal en PDF incorporado.
 
-Período: **agosto 2023 a agosto 2026** · tres ciclos anuales de septiembre a agosto, contados hacia atrás desde el 31 de agosto de 2026.
+Período: **agosto 2023 a septiembre 2026** · tres ciclos anuales de octubre a septiembre, contados hacia atrás desde el 30 de septiembre de 2026.
 
 ## Qué contiene
 
 | Archivo | Contenido |
 | --- | --- |
 | `index.html` | Tablero completo: datos, estilos, gráficos, buscador y logo institucional, todo embebido |
-| `Informe_Cobranzas_trienal_ago26.pdf` | Informe de cobranzas en formato presentación, enlazado desde el encabezado y el pie del tablero |
+| `Informe_Cobranzas_trienal_sep26.pdf` | Informe de cobranzas en formato presentación, enlazado desde el encabezado y el pie del tablero |
+| `Informe_Cobranzas_trienal_sep26.pptx` | El mismo informe en PowerPoint editable, por si hay que retocar una lámina |
 | `manifest.webmanifest` | Definición de la aplicación instalable (nombre, iconos, colores, pantalla completa) |
 | `sw.js` | Service worker: permite usar el tablero y abrir el informe sin conexión |
 | `icons/` | Iconos de la aplicación en 192 y 512 px, versión enmascarable para Android y touch icon para iOS |
@@ -21,7 +22,8 @@ Período: **agosto 2023 a agosto 2026** · tres ciclos anuales de septiembre a a
 - **Conjunto**: diez principales pagadores o nueve dependencias.
 - **Unidad**: pesos constantes ajustados por CER, dólares del día o pesos corrientes.
 - **Vista**: tendencia de media móvil de 3 meses (por defecto) o valores mensuales; opción de acumular la selección.
-- **Buscador**: cualquiera de los 250 mayores pagadores por razón social o CUIT —97,6% de la cobranza del período—, que se dibuja en ámbar sobre el gráfico.
+- **Buscador**: cualquiera de los 250 mayores pagadores por razón social o CUIT —97,5% de la cobranza del período—, que se dibuja en ámbar sobre el gráfico.
+- **Al pisar el gráfico**: además del valor mensual, cada serie muestra la variación de su acumulado del ciclo a la fecha contra igual tramo del ciclo anterior (i.a.) y del primero (trienal). Se calcula sobre valores crudos y coincide con los KPIs al cierre del ciclo.
 - **Franja inferior** con el total del conjunto en escala propia, tabla de comparación por ciclo anual y nota metodológica.
 
 ## Publicar en GitHub Pages
@@ -55,7 +57,7 @@ Una vez instalada, el tablero y el informe quedan guardados en el dispositivo y 
 
 ### Si actualizás los archivos
 
-El service worker guarda copias con la etiqueta de versión que figura en `sw.js`. Cuando reemplaces el tablero o el informe, cambiá esa línea —por ejemplo de `cobranzas-apn-v1` a `cobranzas-apn-v2`— para que los dispositivos ya instalados descarten la copia vieja.
+El service worker guarda copias con la etiqueta de versión que figura en `sw.js`. Cuando reemplaces el tablero o el informe, cambiá esa línea —por ejemplo de `cobranzas-apn-v2` a `cobranzas-apn-v3`— para que los dispositivos ya instalados descarten la copia vieja.
 
 ## Notas
 
@@ -65,4 +67,4 @@ El archivo `index.html` también funciona abierto localmente con doble clic, aun
 
 ## Fuente
 
-Elaboración propia sobre datos disponibles en ReNaRI. El informe de deuda citado corresponde al relevamiento al 31 de agosto de 2026.
+Elaboración propia sobre datos disponibles en ReNaRI. El informe de deuda citado corresponde al relevamiento al 31 de agosto de 2026; los ingresos contra los que se calculan las ratios corresponden al ciclo octubre 2025 – septiembre 2026.
