@@ -319,7 +319,7 @@
       <button id="clearSel" class="clear-btn" hidden>Limpiar</button>
     </div>
     <ul class="leg" id="legend"></ul>
-    <p class="leg-hint">Clic para seleccionar y comparar varias series · clic de nuevo la quita. Sin selección se muestran todas. Con «Acumular» activado, se suma una línea con el total de lo seleccionado.</p>
+    <p class="leg-hint" id="legHint">Clic para seleccionar y comparar varias series · clic de nuevo la quita. Sin selección se muestran todas. Con «Acumular» activado, se suma una línea con el total de lo seleccionado.</p>
   </aside>
 </div>
 
@@ -333,7 +333,7 @@
 </section>
 
 <footer>
-  <b>Metodología.</b> Ingresos expresados a pesos constantes ajustados por índice CER a su fecha; la vista en dólares usa la paridad por tipo de cambio minorista vendedor del mismo día; los <b>pesos corrientes</b> son el valor nominal registrado, sin ajuste, de modo que su evolución incorpora la inflación del período y no debe leerse como crecimiento real. Los tres <b>universos</b> son concéntricos, de menor a mayor alcance: <b>concesionarios y permisionarios</b> toma únicamente las razones sociales alcanzadas por declaración jurada de concesión o permiso —42 actores que explican 93% de la cobranza de prestadores del último ciclo—; <b>prestadores turísticos</b> agrega el resto de los operadores turísticos identificados; <b>todos los pagos</b> suma además el resto de los conceptos cobrados. Los dos primeros ya excluyen los medios de pago electrónicos, de modo que ese control queda inactivo al elegirlos. Los <b>medios de pago electrónicos</b> se depuran por defecto: sólo figuran registrados hasta julio de 2025, de modo que incluirlos vuelve incomparables los ciclos. La <b>tendencia (MM3)</b> es la media móvil de 3 meses, que suaviza el efecto estacional y es la vista por defecto; «Mensual» muestra los valores sin suavizar. La <b>franja inferior</b> del gráfico es el total del conjunto de series activas, con escala propia porque su magnitud es varias veces la de cada serie. Al <b>pisar el gráfico</b>, cada serie muestra la variación de su <b>acumulado del ciclo a la fecha</b> contra igual tramo del ciclo anterior (i.a.) y del primero (trienal); se calcula siempre sobre valores crudos aunque la vista esté en MM3, y al llegar al último mes coincide con las tarjetas y la tabla de ciclos. El <b>buscador</b> permite traer al gráfico cualquiera de los 250 mayores pagadores por razón social o CUIT —97,5% de la cobranza del período—; esa línea se dibuja en ámbar y se calcula sobre todos los pagos de esa razón social. Los ciclos anuales van de octubre a septiembre, contados hacia atrás desde el 30 de septiembre de 2026. Fuente: elaboración propia sobre datos disponibles en ReNaRI.
+  <b>Metodología.</b> Ingresos expresados a pesos constantes ajustados por índice CER a su fecha; la vista en dólares usa la paridad por tipo de cambio minorista vendedor del mismo día; los <b>pesos corrientes</b> son el valor nominal registrado, sin ajuste, de modo que su evolución incorpora la inflación del período y no debe leerse como crecimiento real. Los tres <b>universos</b> son concéntricos, de menor a mayor alcance: <b>concesionarios y permisionarios</b> toma únicamente las razones sociales alcanzadas por declaración jurada de concesión o permiso —42 actores que explican 93% de la cobranza de prestadores del último ciclo—; <b>prestadores turísticos</b> agrega el resto de los operadores turísticos identificados; <b>todos los pagos</b> suma además el resto de los conceptos cobrados. Los dos primeros ya excluyen los medios de pago electrónicos, de modo que ese control queda inactivo al elegirlos. Los <b>medios de pago electrónicos</b> se depuran por defecto: sólo figuran registrados hasta julio de 2025, de modo que incluirlos vuelve incomparables los ciclos. La <b>tendencia (MM3)</b> es la media móvil de 3 meses, que suaviza el efecto estacional y es la vista por defecto; «Mensual» muestra los valores sin suavizar. La <b>franja inferior</b> del gráfico es el total del conjunto de series activas, con escala propia porque su magnitud es varias veces la de cada serie. Al <b>pisar el gráfico</b>, cada serie muestra la variación de su <b>acumulado del ciclo a la fecha</b> contra igual tramo del ciclo anterior (i.a.) y del primero (trienal); se calcula siempre sobre valores crudos aunque la vista esté en MM3, y al llegar al último mes coincide con las tarjetas y la tabla de ciclos. El <b>buscador</b> permite aislar cualquiera de los 250 mayores pagadores por razón social o CUIT —97,5% de la cobranza del período—: al elegirlo, el gráfico pasa a mostrar únicamente su serie, en ámbar y calculada sobre todos los pagos de esa razón social; las tarjetas de ciclo y la tabla de comparación siguen correspondiendo al conjunto elegido. Los ciclos anuales van de octubre a septiembre, contados hacia atrás desde el 30 de septiembre de 2026. Fuente: elaboración propia sobre datos disponibles en ReNaRI.
   <br><br><a class="doclink" href="Informe_Cobranzas_trienal_sep26.pdf" target="_blank" rel="noopener"><span class="dot" aria-hidden="true"></span>Descargar el informe completo <span class="fmt">PDF</span></a>
 </footer>
 
@@ -417,11 +417,28 @@ function renderKPIs(){
 /* ---------- chart ---------- */
 const SVG='http://www.w3.org/2000/svg';
 const W=900,H=500, M={l:56,r:16,t:26,b:52};
-const STRIP=76, SGAP=18;                       // franja del total del conjunto
-const PW=W-M.l-M.r, PH=H-M.t-M.b-STRIP-SGAP;
-const SY=M.t+PH+SGAP;                          // tope de la franja
+const STRIP_H=76, SGAP_H=18;                   // franja del total del conjunto
+const PW=W-M.l-M.r;
+let STRIP=STRIP_H, SGAP=SGAP_H;
+let PH=H-M.t-M.b-STRIP-SGAP;
+let SY=M.t+PH+SGAP;                            // tope de la franja
+
+// modo individual: hay un pagador traído por el buscador
+function individual(){ return !!state.payer; }
+const HINT_DEF='Clic para seleccionar y comparar varias series · clic de nuevo la quita. '+
+  'Sin selección se muestran todas. Con «Acumular» activado, se suma una línea con el total de lo seleccionado.';
+
+// con un pagador individual no hay conjunto que totalizar: el gráfico toma esa franja
+function layout(){
+  STRIP = individual() ? 0 : STRIP_H;
+  SGAP  = individual() ? 0 : SGAP_H;
+  PH = H-M.t-M.b-STRIP-SGAP;
+  SY = M.t+PH+SGAP;
+}
 
 function activeSeries(){
+  // con un pagador buscado el gráfico muestra sólo esa serie
+  if(individual()) return [];
   // sin selección => todas; con selección => sólo las elegidas
   return series().map((d,i)=>({d,i})).filter(o=>{
     if(state.sel.size===0) return true;
@@ -504,6 +521,7 @@ function niceTicks(mx){
 function draw(){
   const svg=document.getElementById('chart');
   svg.innerHTML='';
+  layout();
   const mx=yMax();
 
   // season bands (dic-mar of each cycle): month indices 4-7, 16-19, 28-31
@@ -743,7 +761,7 @@ function onMove(ev){
   });
   if(rows.length>7) html+='<div class="tip-row faint"><span>+ '+(rows.length-7)+' más…</span><span></span></div>';
   if(findV!==null){
-    html+='<div class="tip-row tip-acc"><span><span class="sw" style="background:'+FIND_COLOR+'"></span>'+state.payer.n+'</span>'+
+    html+='<div class="tip-row'+(rows.length?' tip-acc':'')+'"><span><span class="sw" style="background:'+FIND_COLOR+'"></span>'+state.payer.n+'</span>'+
       cells({v:findV, ia:cvFind.ia, tri:cvFind.tri})+'</div>';
   }
   if(totV!==null){
@@ -772,6 +790,22 @@ function onLeave(){
 /* ---------- legend (multi-select) ---------- */
 function renderLegend(){
   const ul=document.getElementById('legend'); ul.innerHTML='';
+  const hint=document.getElementById('legHint');
+  if(individual()){
+    const p=state.payer;
+    const tot=p[state.unit].reduce((a,b)=>a+b,0);
+    const li=document.createElement('li');
+    li.className='sel';
+    li.innerHTML='<span class="swatch" style="background:'+FIND_COLOR+'"></span>'+
+      '<span class="nm">'+p.n+'</span>'+
+      '<span class="val">'+nf(tot/1e6,1)+' M</span>';
+    ul.appendChild(li);
+    if(hint) hint.textContent='El gráfico muestra únicamente al pagador buscado. '+
+      'Quitá la búsqueda para volver al conjunto de series.';
+    document.getElementById('clearSel').hidden=true;
+    return;
+  }
+  if(hint) hint.textContent=HINT_DEF;
   const s=series();
   const hasSel=state.sel.size>0;
   s.forEach((d,i)=>{
@@ -805,21 +839,26 @@ function highlight(i){
 
 /* ---------- refresh all ---------- */
 function refresh(){
-  document.getElementById('chartTitle').textContent =
-    (state.set==='rs'
+  document.getElementById('chartTitle').textContent = individual()
+    ? state.payer.n
+    : (state.set==='rs'
       ? (state.univ==='pt' ? 'Diez principales prestadores turísticos'
         : state.univ==='ddjj' ? 'Diez principales concesionarios y permisionarios'
         : 'Diez principales pagadores')
       : 'Nueve principales dependencias');
   document.getElementById('chartUnit').textContent =
     unitLabel() + ' · ' + (state.view==='ma'?'media móvil 3 meses':'valores mensuales');
-  document.getElementById('legTitle').textContent='Series · total '+(state.unit==='cer'?'CER':(state.unit==='usd'?'USD':'corrientes'));
+  document.getElementById('legTitle').textContent=
+    (individual()?'Pagador · total ':'Series · total ')+(state.unit==='cer'?'CER':(state.unit==='usd'?'USD':'corrientes'));
   document.getElementById('ctl-elec').setAttribute('data-off', elecLocked()?'1':'0');
   document.querySelectorAll('#seg-elec button').forEach(b=>{ b.disabled = elecLocked(); });
   renderMeta();
   const fn=document.getElementById('focusNote');
   const n=state.sel.size;
-  if(n===1){
+  if(individual()){
+    fn.innerHTML='El gráfico muestra únicamente a <b>'+state.payer.n+'</b>. '+
+      'Las tarjetas de ciclo y la tabla de comparación siguen correspondiendo al conjunto elegido.';
+  } else if(n===1){
     fn.textContent='Serie seleccionada: '+series()[[...state.sel][0]].label+'.';
   } else if(n>1){
     const acc = (state.accumulate)
@@ -901,7 +940,7 @@ function varCell(cur,base){
       : (state.elec==='in' ? true : p.e===0);
     let h='<b>'+p.n+'</b>'+(p.c.length?' · CUIT '+p.c.join(' / '):'')+
       ' · total del período '+nf(p.cer.reduce((a,b)=>a+b,0)/1e6,1)+' M $ const.';
-    if(!inUniv) h+=' <span class="warn">— queda fuera del universo activo; la línea se dibuja igual, a título comparativo.</span>';
+    if(!inUniv) h+=' <span class="warn">— queda fuera del universo activo; se grafica igual, sobre todos los pagos de la razón social.</span>';
     note.innerHTML=h;
   }
   function apply(){
@@ -909,7 +948,7 @@ function varCell(cur,base){
     if(!q.trim()){ state.payer=null; clear.hidden=true; note.textContent=''; refresh(); return; }
     const p=match(q);
     if(!p){ state.payer=null; clear.hidden=true; note.innerHTML='<span class="warn">Sin coincidencias entre los 250 mayores pagadores.</span>'; refresh(); return; }
-    state.payer=p; clear.hidden=false; describe(p); refresh();
+    state.payer=p; state.sel.clear(); clear.hidden=false; describe(p); refresh();
   }
   inp.addEventListener('change',apply);
   inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); apply(); } });

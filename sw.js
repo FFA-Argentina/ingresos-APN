@@ -3,7 +3,7 @@
    (para que una publicación nueva se vea enseguida) y caché primero para
    el resto. Funciona sin conexión una vez visitado. */
 
-const VERSION = 'cobranzas-apn-v4';
+const VERSION = 'cobranzas-apn-v6';
 const CORE = [
   './',
   './index.html',
