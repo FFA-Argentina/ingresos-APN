@@ -4,12 +4,14 @@ Tablero interactivo de cobranzas de la **Dirección Nacional de Uso Público —
 
 Período: **agosto 2023 a septiembre 2026** · tres ciclos anuales de octubre a septiembre, contados hacia atrás desde el 30 de septiembre de 2026.
 
+El análisis distingue tres universos anidados: **concesionarios y permisionarios por DDJJ** ⊂ **prestadores turísticos** ⊂ **todos los pagos**. El primero toma las 42 razones sociales alcanzadas por declaración jurada de concesión o permiso y está disponible tanto a nivel de prestador como de dependencia administrativa, en el tablero y en el informe (Tablas III y VIII).
+
 ## Qué contiene
 
 | Archivo | Contenido |
 | --- | --- |
 | `index.html` | Tablero completo: datos, estilos, gráficos, buscador y logo institucional, todo embebido |
-| `Informe_Cobranzas_trienal_sep26.pdf` | Informe de cobranzas en formato presentación, enlazado desde el encabezado y el pie del tablero |
+| `Informe_Cobranzas_trienal_sep26.pdf` | Informe de cobranzas en formato presentación (16 láminas), enlazado desde el encabezado y el pie del tablero |
 | `Informe_Cobranzas_trienal_sep26.pptx` | El mismo informe en PowerPoint editable, por si hay que retocar una lámina |
 | `manifest.webmanifest` | Definición de la aplicación instalable (nombre, iconos, colores, pantalla completa) |
 | `sw.js` | Service worker: permite usar el tablero y abrir el informe sin conexión |
@@ -18,7 +20,7 @@ Período: **agosto 2023 a septiembre 2026** · tres ciclos anuales de octubre a 
 
 ## Qué muestra el tablero
 
-- **Universo**: prestadores turísticos o todos los pagos, con filtro de medios de pago electrónicos (depurados por defecto: sólo figuran registrados hasta julio de 2025).
+- **Universo**: tres recortes concéntricos — concesionarios y permisionarios por DDJJ (42 razones sociales alcanzadas por declaración jurada, 93% de la cobranza de prestadores del último ciclo), prestadores turísticos, o todos los pagos. Los dos primeros ya excluyen los medios de pago electrónicos; para «todos los pagos» el filtro queda disponible (depurados por defecto: sólo figuran registrados hasta julio de 2025).
 - **Conjunto**: diez principales pagadores o nueve dependencias.
 - **Unidad**: pesos constantes ajustados por CER, dólares del día o pesos corrientes.
 - **Vista**: tendencia de media móvil de 3 meses (por defecto) o valores mensuales; opción de acumular la selección.
@@ -57,7 +59,7 @@ Una vez instalada, el tablero y el informe quedan guardados en el dispositivo y 
 
 ### Si actualizás los archivos
 
-El service worker guarda copias con la etiqueta de versión que figura en `sw.js`. Cuando reemplaces el tablero o el informe, cambiá esa línea —por ejemplo de `cobranzas-apn-v2` a `cobranzas-apn-v3`— para que los dispositivos ya instalados descarten la copia vieja.
+El service worker guarda copias con la etiqueta de versión que figura en `sw.js`. Cuando reemplaces el tablero o el informe, cambiá esa línea —por ejemplo de `cobranzas-apn-v3` a `cobranzas-apn-v4`— para que los dispositivos ya instalados descarten la copia vieja.
 
 ## Notas
 
