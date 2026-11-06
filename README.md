@@ -2,9 +2,9 @@
 
 Tablero interactivo de cobranzas de la **Dirección Nacional de Uso Público — Dirección de Concesiones**, con el informe trienal en PDF incorporado.
 
-Período: **agosto 2023 a septiembre 2026** · tres ciclos anuales de octubre a septiembre, contados hacia atrás desde el 30 de septiembre de 2026.
+Período: **agosto 2023 a octubre 2026** · tres ciclos anuales de noviembre a octubre, contados hacia atrás desde el 31 de octubre de 2026.
 
-**Base de valuación.** Los pesos constantes ajustan cada ingreso por el índice CER de su fecha de acreditación y lo reexpresan al CER del cierre del informe —847,28702648924 al 30 de septiembre de 2026—, de modo que todas las cifras están en pesos de esa fecha y son directamente comparables con los valores corrientes del último ciclo. Al tratarse de una constante, la reexpresión no altera ninguna variación porcentual.
+**Base de valuación.** Los pesos constantes ajustan cada ingreso por el índice CER de su fecha de acreditación y lo reexpresan al CER del cierre del informe —862,79966291821 al 31 de octubre de 2026—, de modo que todas las cifras están en pesos de esa fecha y son directamente comparables con los valores corrientes del último ciclo. Al tratarse de una constante, la reexpresión no altera ninguna variación porcentual.
 
 El análisis distingue tres universos anidados: **concesionarios y permisionarios por DDJJ** ⊂ **prestadores turísticos** ⊂ **todos los pagos**. El primero toma las 42 razones sociales alcanzadas por declaración jurada de concesión o permiso y está disponible tanto a nivel de prestador como de dependencia administrativa, en el tablero y en el informe (Tablas III y VIII).
 
@@ -13,8 +13,8 @@ El análisis distingue tres universos anidados: **concesionarios y permisionario
 | Archivo | Contenido |
 | --- | --- |
 | `index.html` | Tablero completo: datos, estilos, gráficos, buscador y logo institucional, todo embebido |
-| `Informe_Cobranzas_trienal_sep26.pdf` | Informe de cobranzas en formato presentación (16 láminas), enlazado desde el encabezado y el pie del tablero |
-| `Informe_Cobranzas_trienal_sep26.pptx` | El mismo informe en PowerPoint editable, por si hay que retocar una lámina |
+| `Informe_Cobranzas_trienal_oct26.pdf` | Informe de cobranzas en formato presentación (16 láminas), enlazado desde el encabezado y el pie del tablero |
+| `Informe_Cobranzas_trienal_oct26.pptx` | El mismo informe en PowerPoint editable, por si hay que retocar una lámina |
 | `manifest.webmanifest` | Definición de la aplicación instalable (nombre, iconos, colores, pantalla completa) |
 | `sw.js` | Service worker: permite usar el tablero y abrir el informe sin conexión |
 | `icons/` | Iconos de la aplicación en 192 y 512 px, versión enmascarable para Android y touch icon para iOS |
@@ -24,7 +24,7 @@ El análisis distingue tres universos anidados: **concesionarios y permisionario
 
 - **Universo**: tres recortes concéntricos — concesionarios y permisionarios por DDJJ (42 razones sociales alcanzadas por declaración jurada, 93% de la cobranza de prestadores del último ciclo), prestadores turísticos, o todos los pagos. Los dos primeros ya excluyen los medios de pago electrónicos; para «todos los pagos» el filtro queda disponible (depurados por defecto: sólo figuran registrados hasta julio de 2025).
 - **Conjunto**: diez principales pagadores o nueve dependencias.
-- **Unidad**: pesos constantes al 30 de septiembre de 2026, dólares del día o pesos corrientes. Los importes en pesos se expresan en miles de millones; los dólares, en millones.
+- **Unidad**: pesos constantes al 31 de octubre de 2026, dólares del día o pesos corrientes. Los importes en pesos se expresan en miles de millones; los dólares, en millones.
 - **Vista**: tendencia de media móvil de 3 meses (por defecto) o valores mensuales; opción de acumular la selección.
 - **Buscador**: cualquiera de los 250 mayores pagadores por razón social o CUIT —97,5% de la cobranza del período—. Al elegir uno el gráfico entra en **modo individual**: muestra únicamente su serie, en ámbar y ocupando todo el alto del panel, con la leyenda reducida a ese pagador y sin la franja del total del conjunto. Las tarjetas de ciclo y la tabla de comparación siguen correspondiendo al conjunto elegido, y el botón «Quitar» devuelve la vista al conjunto.
 - **Al pisar el gráfico**: además del valor mensual, cada serie muestra la variación de su acumulado del ciclo a la fecha contra igual tramo del ciclo anterior (i.a.) y del primero (trienal). Se calcula sobre valores crudos y coincide con los KPIs al cierre del ciclo.
@@ -61,7 +61,7 @@ Una vez instalada, el tablero y el informe quedan guardados en el dispositivo y 
 
 ### Si actualizás los archivos
 
-El service worker guarda copias con la etiqueta de versión que figura en `sw.js`. Cuando reemplaces el tablero o el informe, cambiá esa línea —por ejemplo de `cobranzas-apn-v6` a `cobranzas-apn-v7`— para que los dispositivos ya instalados descarten la copia vieja.
+El service worker guarda copias con la etiqueta de versión que figura en `sw.js`. Cuando reemplaces el tablero o el informe, cambiá esa línea —por ejemplo de `cobranzas-apn-v8` a `cobranzas-apn-v9`— para que los dispositivos ya instalados descarten la copia vieja.
 
 ## Notas
 
@@ -71,4 +71,4 @@ El archivo `index.html` también funciona abierto localmente con doble clic, aun
 
 ## Fuente
 
-Elaboración propia sobre datos disponibles en ReNaRI. El informe de deuda citado corresponde al relevamiento al 30 de septiembre de 2026; los ingresos contra los que se calculan las ratios corresponden al ciclo octubre 2025 – septiembre 2026.
+Elaboración propia sobre datos disponibles en ReNaRI. El informe de deuda citado corresponde al relevamiento al 31 de octubre de 2026; los ingresos contra los que se calculan las ratios son los del ciclo 2025/26 (noviembre 2025 – octubre 2026), que cierra en la misma fecha.

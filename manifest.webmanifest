@@ -1,7 +1,7 @@
 {
   "name": "Cobranzas · Administración de Parques Nacionales",
   "short_name": "Cobranzas APN",
-  "description": "Evolución mensual de cobranzas por prestador y dependencia, agosto 2023 a septiembre 2026. Dirección Nacional de Uso Público — Dirección de Concesiones.",
+  "description": "Evolución mensual de cobranzas por prestador y dependencia, agosto 2023 a octubre 2026. Dirección Nacional de Uso Público — Dirección de Concesiones.",
   "lang": "es-AR",
   "dir": "ltr",
   "start_url": "./index.html",
@@ -39,7 +39,7 @@
     {
       "name": "Informe completo en PDF",
       "short_name": "Informe PDF",
-      "url": "./Informe_Cobranzas_trienal_sep26.pdf",
+      "url": "./Informe_Cobranzas_trienal_oct26.pdf",
       "icons": [
         {
           "src": "icons/icon-192.png",

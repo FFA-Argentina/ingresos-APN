@@ -3,12 +3,12 @@
    (para que una publicación nueva se vea enseguida) y caché primero para
    el resto. Funciona sin conexión una vez visitado. */
 
-const VERSION = 'cobranzas-apn-v7';
+const VERSION = 'cobranzas-apn-v9';
 const CORE = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './Informe_Cobranzas_trienal_sep26.pdf',
+  './Informe_Cobranzas_trienal_oct26.pdf',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon-maskable-512.png',
